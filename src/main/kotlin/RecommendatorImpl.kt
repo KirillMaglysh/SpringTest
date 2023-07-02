@@ -16,6 +16,6 @@ object RecommendatorImpl : Recommendator {
     }
 
     override fun recomend() {
-        println("to protect from covid19 drink " + alcohol)
+        println("to protect from covid19 drink $alcohol")
     }
 }
