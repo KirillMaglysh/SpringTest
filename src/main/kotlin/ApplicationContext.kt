@@ -26,7 +26,7 @@ class ApplicationContext(
             implClass = config.getImplClass(type)
         }
 
-        val instance = factory.createObject(implClass)
+        val instance = factory.createAndConfigureAny(implClass)
         if (implClass.objectInstance != null) {
             cache[type] = instance
         }
