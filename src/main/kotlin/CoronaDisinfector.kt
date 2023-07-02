@@ -2,12 +2,13 @@
  * @author Kirill
  * @since 29.06.2023
  */
-class CoronaDisinfector {
+@Deprecated("deprecated")
+open class CoronaDisinfector {
     @field:InjectByType
-    private lateinit var announcer: Announcer
+    protected open lateinit var announcer: Announcer
 
     @field:InjectByType
-    private lateinit var policeman: Policeman
+    protected open lateinit var policeman: Policeman
 
     fun start(room: Room) {
         announcer.announce("Disinfection started")

@@ -8,9 +8,15 @@ import kotlin.reflect.KClass
  */
 class ObjectFactory(private val context: ApplicationContext) {
     private val configurators = ArrayList<ObjectConfigurator>()
+    private val proxyConfigurators = ArrayList<ProxyConfigurator>()
 
     init {
-        for (clazz in context.config.getScanner().getSubTypesOf(ObjectConfigurator::class.java)) {
+        collectConfigurators(configurators, ObjectConfigurator::class)
+        collectConfigurators(proxyConfigurators, ProxyConfigurator::class)
+    }
+
+    private fun <T : Any> collectConfigurators(configurators: ArrayList<T>, type: KClass<T>) {
+        for (clazz in context.config.getScanner().getSubTypesOf(type.java)) {
             configurators.add(clazz.kotlin.objectInstance!!)
         }
     }
@@ -20,8 +26,15 @@ class ObjectFactory(private val context: ApplicationContext) {
         val instance = create(implClass)
         configure(instance)
         invokeInit(implClass, instance)
+        return wrapWithProxyIfNeeded(instance, implClass)
+    }
 
-        return instance
+    private fun <T : Any> wrapWithProxyIfNeeded(instance: T, implClass: KClass<T>): T {
+        var instance1 = instance
+        for (proxyConfigurator in proxyConfigurators) {
+            instance1 = proxyConfigurator.replaceWithProxyIfNeeded(instance1, implClass) as T
+        }
+        return instance1
     }
 
     private fun <T : Any> invokeInit(implClass: KClass<T>, instance: T) {
