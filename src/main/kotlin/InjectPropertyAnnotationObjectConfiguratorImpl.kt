@@ -15,7 +15,7 @@ object InjectPropertyAnnotationObjectConfiguratorImpl : ObjectConfigurator {
     }
 
     @SneakyThrows
-    override fun configure(obj: Any) {
+    override fun configure(obj: Any, context: ApplicationContext) {
         val implClass = obj::class
 
         for (field in implClass.java.declaredFields) {

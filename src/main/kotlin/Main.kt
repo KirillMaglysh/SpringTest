@@ -4,5 +4,7 @@
  */
 
 fun main() {
-    ObjectFactory.createObject(CoronaDisinfector::class).start(Room())
+    val context = Application.run("", hashMapOf(Pair(Policeman::class, PolicemanImpl::class)))
+    val disinfector = context.getAny(CoronaDisinfector::class)
+    disinfector.start(Room())
 }

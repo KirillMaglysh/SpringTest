@@ -6,12 +6,12 @@ import kotlin.reflect.KClass
  * @author Kirill
  * @since 30.06.2023
  */
-class InjectByTYpeAnnotationObjectConfiguratorImpl : ObjectConfigurator {
-    override fun configure(obj: Any) {
+object InjectByTYpeAnnotationObjectConfiguratorImpl : ObjectConfigurator {
+    override fun configure(obj: Any, context: ApplicationContext) {
         for (field in obj::class.java.declaredFields) {
             if (field.isAnnotationPresent(InjectByType::class.java)) {
                 field.isAccessible = true
-                field.set(obj, ObjectFactory.createObject(field.type as KClass<out Any>))
+                field.set(obj, context.getAny(field.type.kotlin as KClass<out Any>))
             }
         }
     }

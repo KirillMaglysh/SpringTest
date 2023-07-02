@@ -1,3 +1,4 @@
+import org.reflections.Reflections
 import kotlin.reflect.KClass
 
 /**
@@ -6,4 +7,6 @@ import kotlin.reflect.KClass
  */
 interface Config {
     fun <T : Any> getImplClass(ifc: KClass<T>): KClass<out T>
+
+    fun getScanner(): Reflections
 }

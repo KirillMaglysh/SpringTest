@@ -4,6 +4,6 @@
  * @author Kirill
  * @since 30.06.2023
  */
-interface Recomendator {
+interface Recommendator {
     fun recomend()
 }

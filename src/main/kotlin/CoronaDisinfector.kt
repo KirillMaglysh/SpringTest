@@ -3,10 +3,11 @@
  * @since 29.06.2023
  */
 class CoronaDisinfector {
-    @InjectByType
-    private val announcer = ObjectFactory.createObject(Announcer::class)
-    @InjectByType
-    private val policeman = ObjectFactory.createObject(Policeman::class)
+    @field:InjectByType
+    private lateinit var announcer: Announcer
+
+    @field:InjectByType
+    private lateinit var policeman: Policeman
 
     fun start(room: Room) {
         announcer.announce("Disinfection started")

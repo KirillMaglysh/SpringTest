@@ -10,8 +10,7 @@ class JavaConfig(
     private var ifc2ImplClass: HashMap<KClass<out Any>, KClass<out Any>>
 ) : Config {
 
-    var scanner: Reflections
-        private set
+    private var scanner: Reflections
 
     init {
         scanner = Reflections(packageToScan)
@@ -28,5 +27,9 @@ class JavaConfig(
 
             classes.iterator().next().kotlin
         } as KClass<out T>
+    }
+
+    override fun getScanner(): Reflections {
+        return scanner
     }
 }
