@@ -16,7 +16,13 @@ class ObjectFactory(private val context: ApplicationContext) {
 
     @SneakyThrows
     fun <T : Any> createObject(implClass: KClass<T>): T {
-        val instance = implClass.java.getDeclaredConstructor().newInstance()
+        val instance =
+            if (implClass.objectInstance == null) {
+                implClass.java.getDeclaredConstructor().newInstance()
+            } else {
+                implClass.objectInstance!!
+            }
+
         configurators.forEach { it.configure(instance, context) }
 
         return instance
