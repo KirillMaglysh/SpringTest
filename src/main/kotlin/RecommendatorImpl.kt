@@ -4,7 +4,7 @@
  * @author Kirill
  * @since 30.06.2023
  */
-class RecommendatorImpl : Recommendator {
+object RecommendatorImpl : Recommendator {
     @field:InjectProperty("whisky")
     private lateinit var alcohol: String
 
